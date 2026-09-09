@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      AGENT_WORKSPACE: /app/workspace
+      DB_PATH: /app/data/bot.db
+    volumes:
+      - ./workspace:/app/workspace
+      - ./data:/app/data
