@@ -1,0 +1,18 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      AGENT_WORKSPACE: /data/workspace
+      DB_PATH: /data/bot.db
+    volumes:
+      # Рабочая папка агента и база — переживают пересборку образа.
+      - ./data:/data
+      # Скилы и настройки Claude. Сюда же ложится токен после `claude setup-token`.
+      - ./claude-home:/root/.claude
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
